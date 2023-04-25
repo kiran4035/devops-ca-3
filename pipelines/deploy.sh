@@ -4,12 +4,9 @@ export ECS_CLUSTER="devops-ca3-cluster-2t4fwe"
 export PROJECT_NAME="ca-3"
 export ECS_SERVICE="$PROJECT_NAME"
 
-curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-apt install nodejs jq -y
+apt install node jq -y
 
-source .env
-
-node pipeline/taskGen.js "$PROJECT_NAME" "$IMAGE_URI"
+node pipelines/taskGen.js "$PROJECT_NAME" "$IMAGE_URI"
 
 awsTaskDfARN=$(aws ecs register-task-definition --cli-input-json file://pipelines/task-definition.json)
 echo "$awsTaskDfARN"
