@@ -2,12 +2,12 @@ FROM node:lts
 
 WORKDIR /app
 
-RUN git clone https://github.com/kiran4035/GPT-3-by-Team-Educators .
+COPY package.json .
 
-RUN yarn build
+RUN yarn
 
-RUN npm i -g serve
+COPY . .
 
-EXPOSE 3000
+EXPOSE 80
 
-CMD yarn start
+CMD node index.js
