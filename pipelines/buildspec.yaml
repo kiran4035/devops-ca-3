@@ -20,4 +20,4 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - docker push $REPOSITORY_URI:latest
       - IMAGE_URI="$REPOSITORY_URI:$IMAGE_TAG"
-      - bash pipeline/deploy.sh
+      - bash pipelines/deploy.sh
