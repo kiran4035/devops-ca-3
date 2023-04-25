@@ -1,9 +1,16 @@
 const express = require("express")
 const cors = require("cors")
 const helmet = require("helmet")
+const morgan = require("morgan")
 const pkg = require("./package.json")
 
 const app = express()
+
+app.use(morgan('dev'))
+app.use(helmet())
+app.use(cors({
+    allowedHeaders: ["*"]
+}))
 
 app.get("/", express.static("public"))
 
