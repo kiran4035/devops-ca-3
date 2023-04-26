@@ -3,7 +3,7 @@ const cors = require("cors")
 const helmet = require("helmet")
 const morgan = require("morgan")
 const pkg = require("./package.json")
-
+const path = require("path")
 const app = express()
 
 app.use(morgan('dev'))
@@ -12,7 +12,17 @@ app.use(cors({
     allowedHeaders: ["*"]
 }))
 
-app.get("/", express.static("public"))
+app.use((req, res, next) => {
+    if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
+        next();
+    } else {
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+        res.header('Expires', '-1');
+        res.header('Pragma', 'no-cache');
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    }
+});
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/version', (req, res) => {
     res.json(pkg.version)
