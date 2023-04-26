@@ -8,9 +8,7 @@ const app = express()
 
 app.use(morgan('dev'))
 app.use(helmet())
-app.use(cors({
-    allowedHeaders: ["*"]
-}))
+app.use(cors("*"))
 
 app.use(express.static(path.join(__dirname, 'public')));
 
